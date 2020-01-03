@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Header from './components/Header';
+import SKForm from './components/SKForm';
+import SKToolbar from './components/SKToolbar';
+import SKTabledata from './components/SKTabledata';
+import { WorkConsumer } from './context';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends Component {
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <WorkConsumer>
+            {value => {
+              return (
+                <>
+                <Header>Quản lý công việc</Header>
+                {/* Form add and edit */}
+
+          { (value.formShow) ? <SKForm value={value}>Form thêm và sửa</SKForm> : '' }
+                <div className="col mt-5">
+                  {/* Toolbar */}
+                  <SKToolbar />
+                  {/* Tabledata */}
+                  <SKTabledata />
+                </div>
+                </>
+              )
+            }}
+          </WorkConsumer>
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
