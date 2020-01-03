@@ -41,7 +41,15 @@ class WorkProvider extends Component {
   componentDidMount() {
     this.setState({
       workList: this.state.works
-    })
+    });
+  }
+  componentWillMount() {
+      if(localStorage && localStorage.getItem('works')){
+          var works = JSON.parse(localStorage.getItem('works'));
+          this.setState({
+              works : works
+          });
+      }
   }
 
   updateItem = (id) => {
@@ -79,6 +87,7 @@ class WorkProvider extends Component {
     this.setState({
       works: works
     });
+    localStorage.setItem('works', JSON.stringify(works));
   }
 
   onSortBy = (property = 'name', orderBy = 'asc') => {
@@ -152,19 +161,22 @@ class WorkProvider extends Component {
       txtName: '',
       stStatus: true
     });
+    localStorage.setItem('works', JSON.stringify(works));
     
     this.onChangeForm();
   }
 
   removeItem = (id) => {
-    let teamworks = [...this.state.works];
-    console.log(teamworks);
+    let works = [...this.state.works];
+    console.log(works);
     
-    teamworks = teamworks.filter(item => item.id !== id);
+    works = works.filter(item => item.id !== id);
 
     this.setState({
-      workList: [...teamworks]
+      works: [...works],
+      workList: [...works]
     })
+    localStorage.setItem('works', JSON.stringify(works));
   }
 
   render() {
